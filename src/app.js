@@ -29,4 +29,14 @@ app.get('/strings/first-characters/:string', (req, res) => {
   res.status(200).json({ result: req.params.string.slice(0, stringLength) });
 });
 
+app.get('/numbers/add/:number1/and/:number2', (req, res) => {
+  const number1 = Number(req.params.number1);
+  const number2 = Number(req.params.number2);
+  if (isNaN(number1) || isNaN(number2)) {
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
+  } else {
+    res.status(200).json({ result: number1 + number2 });
+  }
+});
+
 module.exports = app;
