@@ -54,4 +54,18 @@ app.post('/numbers/multiply', (req, res) => {
   }
 });
 
+app.post('/numbers/divide', (req, res) => {
+  const number1 = Number(req.body.a);
+  const number2 = Number(req.body.b);
+  if (number2 === 0) {
+    res.status(400).json({ error: 'Unable to divide by 0.' });
+  } else if (req.body.a === undefined || req.body.b === undefined) {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  } else if (isNaN(number1) || isNaN(number2)) {
+    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  } else {
+    res.status(200).json({ result: number1 / number2 });
+  }
+});
+
 module.exports = app;
