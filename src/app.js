@@ -4,6 +4,7 @@ const { json } = require('express/lib/response');
 const { restart } = require('nodemon');
 
 const app = express();
+app.use(express.json());
 
 app.get('/strings/hello/:string', (req, res) => {
   // eslint-disable-next-line prefer-destructuring
@@ -36,6 +37,20 @@ app.get('/numbers/add/:number1/and/:number2', (req, res) => {
     res.status(400).json({ error: 'Parameters must be valid numbers.' });
   } else {
     res.status(200).json({ result: number1 + number2 });
+  }
+});
+
+app.post('/numbers/multiply', (req, res) => {
+  const number1 = Number(req.body.a);
+  const number2 = Number(req.body.b);
+  console.log(req.body.a);
+  console.log(req.body.b);
+  if (req.body.a === undefined || req.body.b === undefined) {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  } else if (isNaN(number1) || isNaN(number2)) {
+    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  } else {
+    res.status(200).json({ result: number1 * number2 });
   }
 });
 
